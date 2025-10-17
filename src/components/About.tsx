@@ -16,6 +16,12 @@ import {
   FaServer,
   FaTools,
   FaDesktop,
+  FaSearch,
+  FaGem,
+  FaComment,
+  FaMousePointer,
+  FaCode,
+  FaHeart,
 } from 'react-icons/fa';
 
 // Small inline TechBadge component
@@ -237,6 +243,50 @@ const About = () => {
                 <TechBadge icon={<FaAws className="text-amber-400" />} label="AWS Lambda" theme={theme} />
                 <TechBadge icon={<FaGitAlt className="text-red-500" />} label="Git" theme={theme} />
                 <TechBadge icon={<FaTools className="text-indigo-400" />} label="VS Code" theme={theme} />
+              </div>
+            </div>
+
+            <div className={`${cardBg} p-6 rounded-xl border ${theme === 'dark' ? 'border-gray-600 shadow-none' : 'border-gray-100 shadow-sm'} transition-shadow hover:shadow-md` }>
+              <h4 className={`font-semibold mb-4 ${textPrimary}`}>AI</h4>
+              <div className="grid grid-cols-2 gap-3">
+                <TechBadge icon={<FaSearch className="text-purple-500" />} label="Perplexity AI" theme={theme} />
+                <TechBadge icon={<FaGem className="text-blue-500" />} label="Gemini AI" theme={theme} />
+                <TechBadge icon={<FaComment className="text-green-500" />} label="ChatGPT AI" theme={theme} />
+                <TechBadge icon={<FaMousePointer className="text-orange-500" />} label="Cursor AI" theme={theme} />
+                <TechBadge icon={<FaCode className="text-pink-500" />} label="Kilo AI" theme={theme} />
+                <TechBadge icon={<FaHeart className="text-indigo-500" />} label="Lovable AI" theme={theme} />
+              </div>
+            </div>
+          </div>
+        </motion.section>
+        {/* Experience Section */}
+        <motion.section className="mt-20" variants={itemVariants}>
+          <motion.h3 className={`text-3xl font-bold text-center mb-4 ${textPrimary}`}>Experience</motion.h3>
+          <p className={`text-center mb-6 ${textSecondary}`}>Versatile software developer with proven experience working independently and collaboratively.</p>
+          <p className={`text-center mb-12 ${textSecondary}`}>Leading teams in the absence of senior developers, and delivering scalable, high-performance web applications with clean, maintainable code.</p>
+
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+            {/* Timeline item 1 */}
+            <div className="md:col-span-3 flex justify-start md:justify-end">
+              <div className="inline-block bg-blue-900/60 text-white rounded-full px-6 py-2">Jan 2024 - Present</div>
+            </div>
+            <div className="md:col-span-9">
+              <div className={`${cardBg} rounded-lg p-6 border ${theme === 'dark' ? 'border-gray-700' : 'border-gray-100'} shadow-md` }>
+                <h4 className={`text-xl font-bold ${textPrimary}`}>Junior Full Stack Developer</h4>
+                <p className={`text-sm ${theme === 'dark' ? 'text-cyan-300' : 'text-blue-600'} mb-3`}>Technosters Technologies OPC Pvt. Ltd.</p>
+                <p className={`${textSecondary}`}>Contributed to the design and development of a fully functional e-commerce platform along with a dynamic admin panel using React.js, Material-UI, and Tailwind CSS. Independently delivered a responsive and intuitive user experience, optimizing frontend performance by 45%. Developed modular and reusable backend APIs, ensuring seamless integration between client and server for enhanced scalability and maintainability. Conducted thorough API testing using Postman and maintained backend services to guarantee reliability and efficiency.</p>
+              </div>
+            </div>
+
+            {/* Timeline item 2 */}
+            <div className="md:col-span-3 flex justify-start md:justify-end">
+              <div className="inline-block bg-blue-900/60 text-white rounded-full px-6 py-2">Jun 2023 - Jan 2024</div>
+            </div>
+            <div className="md:col-span-9">
+              <div className={`${cardBg} rounded-lg p-6 border ${theme === 'dark' ? 'border-gray-700' : 'border-gray-100'} shadow-md` }>
+                <h4 className={`text-xl font-bold ${textPrimary}`}>Full Stack Developer</h4>
+                <p className={`text-sm ${theme === 'dark' ? 'text-cyan-300' : 'text-blue-600'} mb-3`}>Technosters Technologies OPC Pvt. Ltd.</p>
+                <p className={`${textSecondary}`}>Played a key role in developing and optimizing internal tools by designing fully responsive and user-friendly interfaces. Built robust, modular REST APIs integrated with MongoDB to ensure efficient data handling and seamless performance. Collaborated closely in Agile sprints, contributing to feature planning, code reviews, and detailed technical documentation to maintain development standards and accelerate delivery timelines.</p>
               </div>
             </div>
           </div>

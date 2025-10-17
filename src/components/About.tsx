@@ -116,7 +116,7 @@ const About = () => {
                 </div>
                 <div className="relative md:hidden">
                   <motion.img
-                    src="/3.jpg"
+                    src="/3.png"
                     alt="Framed Image 2"
                     className="w-64 h-64 object-cover rounded-lg shadow-2xl border-8 border-gradient-to-r from-blue-400 via-purple-500 to-indigo-500 bg-white p-2 mx-auto"
                   />

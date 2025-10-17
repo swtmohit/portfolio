@@ -38,7 +38,7 @@ const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <span className="text-3xl md:text-5xl">Hi, I'm <span className={nameClass}>Mohit...</span></span><br />
+            <span className="text-3xl md:text-5xl">Hi, I'm <span className={nameClass}>Mohit Singh</span></span><br />
             <span className="text-xl md:text-3xl mt-4">Full-Stack Developer from India</span>
           </motion.h1>
           <motion.p

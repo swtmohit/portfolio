@@ -187,65 +187,56 @@ const About = () => {
 
           {/* Tech stack data */}
           {/** Define a small TechBadge component for consistent rendering */}
-          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/** Left column groups */}
-            <div className="space-y-6">
-              <div className={`${cardBg} p-6 rounded-xl border ${theme === 'dark' ? 'border-gray-600 shadow-none' : 'border-gray-100 shadow-sm'} transition-shadow hover:shadow-md` }>
-                <h4 className={`font-semibold mb-4 ${textPrimary}`}>Frontend</h4>
-                <div className="grid grid-cols-2 gap-3">
-                  <TechBadge icon={<FaHtml5 className="w-4 h-4 text-orange-500" />} label="HTML" theme={theme} />
-                  <TechBadge icon={<FaCss3Alt className="w-4 h-4 text-blue-500" />} label="CSS" theme={theme} />
-                  <TechBadge icon={<FaJsSquare className="w-4 h-4 text-yellow-400" />} label="JavaScript" theme={theme} />
-                  <TechBadge icon={<FaReact className="w-4 h-4 text-sky-400" />} label="ReactJS" theme={theme} />
-                  <TechBadge icon={<FaJsSquare className="w-4 h-4 text-blue-600" />} label="TypeScript" theme={theme} />
-                  <TechBadge icon={<FaTools className="w-4 h-4 text-orange-300" />} label="MUI" theme={theme} />
-                </div>
-              </div>
-
-              <div className={`${cardBg} p-6 rounded-xl border ${theme === 'dark' ? 'border-gray-600 shadow-none' : 'border-gray-100 shadow-sm'} transition-shadow hover:shadow-md` }>
-                <h4 className={`font-semibold mb-4 ${textPrimary}`}>Database & Cloud</h4>
-                <div className="grid grid-cols-2 gap-3">
-                  <TechBadge icon={<FaDatabase className="text-indigo-400" />} label="GraphQL" theme={theme} />
-                  <TechBadge icon={<FaDatabase className="text-green-400" />} label="MongoDB" theme={theme} />
-                  <TechBadge icon={<FaDatabase className="text-blue-400" />} label="MySQL" theme={theme} />
-                  <TechBadge icon={<FaServer className="text-pink-400" />} label="Kafka" theme={theme} />
-                </div>
+          <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+            <div className={`${cardBg} p-6 rounded-xl border ${theme === 'dark' ? 'border-gray-600 shadow-none' : 'border-gray-100 shadow-sm'} transition-shadow hover:shadow-md` }>
+              <h4 className={`font-semibold mb-4 ${textPrimary}`}>Frontend</h4>
+              <div className="grid grid-cols-2 gap-3">
+                <TechBadge icon={<FaHtml5 className="w-4 h-4 text-orange-500" />} label="HTML" theme={theme} />
+                <TechBadge icon={<FaCss3Alt className="w-4 h-4 text-blue-500" />} label="CSS" theme={theme} />
+                <TechBadge icon={<FaJsSquare className="w-4 h-4 text-yellow-400" />} label="JavaScript" theme={theme} />
+                <TechBadge icon={<FaReact className="w-4 h-4 text-sky-400" />} label="ReactJS" theme={theme} />
+                <TechBadge icon={<FaJsSquare className="w-4 h-4 text-blue-600" />} label="TypeScript" theme={theme} />
+                <TechBadge icon={<FaTools className="w-4 h-4 text-orange-300" />} label="MUI" theme={theme} />
               </div>
             </div>
 
-            {/** Center column groups */}
-            <div className="space-y-6">
-              <div className={`${cardBg} p-6 rounded-xl border ${theme === 'dark' ? 'border-gray-600 shadow-none' : 'border-gray-100 shadow-sm'} transition-shadow hover:shadow-md` }>
-                <h4 className={`font-semibold mb-4 ${textPrimary}`}>State Management</h4>
-                <div className="grid grid-cols-2 gap-3">
-                  <TechBadge icon={<FaTools className="text-violet-400" />} label="Redux" theme={theme} />
-                  <TechBadge icon={<FaTools className="text-sky-400" />} label="React Query" theme={theme} />
-                  <TechBadge icon={<FaTools className="text-amber-400" />} label="Formik" theme={theme} />
-                  <TechBadge icon={<FaTools className="text-green-300" />} label="Yup" theme={theme} />
-                </div>
-              </div>
-
-              <div className={`${cardBg} p-6 rounded-xl border ${theme === 'dark' ? 'border-gray-600 shadow-none' : 'border-gray-100 shadow-sm'} transition-shadow hover:shadow-md` }>
-                <h4 className={`font-semibold mb-4 ${textPrimary}`}>DevOps & Tools</h4>
-                <div className="grid grid-cols-2 gap-3">
-                  <TechBadge icon={<FaDocker className="text-sky-500" />} label="Docker" theme={theme} />
-                  <TechBadge icon={<FaAws className="text-amber-400" />} label="AWS Lambda" theme={theme} />
-                  <TechBadge icon={<FaGitAlt className="text-red-500" />} label="Git" theme={theme} />
-                  <TechBadge icon={<FaTools className="text-indigo-400" />} label="VS Code" theme={theme} />
-                </div>
+            <div className={`${cardBg} p-6 rounded-xl border ${theme === 'dark' ? 'border-gray-600 shadow-none' : 'border-gray-100 shadow-sm'} transition-shadow hover:shadow-md` }>
+              <h4 className={`font-semibold mb-4 ${textPrimary}`}>State Management</h4>
+              <div className="grid grid-cols-2 gap-3">
+                <TechBadge icon={<FaTools className="text-violet-400" />} label="Redux" theme={theme} />
+                <TechBadge icon={<FaTools className="text-sky-400" />} label="React Query" theme={theme} />
+                <TechBadge icon={<FaTools className="text-amber-400" />} label="Formik" theme={theme} />
+                <TechBadge icon={<FaTools className="text-green-300" />} label="Yup" theme={theme} />
               </div>
             </div>
 
-            {/** Right column groups */}
-            <div className="space-y-6">
-              <div className={`${cardBg} p-6 rounded-xl border ${theme === 'dark' ? 'border-gray-600 shadow-none' : 'border-gray-100 shadow-sm'} transition-shadow hover:shadow-md` }>
-                <h4 className={`font-semibold mb-4 ${textPrimary}`}>Backend & Mobile</h4>
-                <div className="grid grid-cols-2 gap-3">
-                  <TechBadge icon={<FaNodeJs className="text-green-500" />} label="NodeJS" theme={theme} />
-                  <TechBadge icon={<FaServer className="text-pink-400" />} label="Express.JS" theme={theme} />
-                  <TechBadge icon={<FaDesktop className="text-indigo-400" />} label="ElectronJS" theme={theme} />
-                  <TechBadge icon={<FaMobileAlt className="text-blue-400" />} label="React Native" theme={theme} />
-                </div>
+            <div className={`${cardBg} p-6 rounded-xl border ${theme === 'dark' ? 'border-gray-600 shadow-none' : 'border-gray-100 shadow-sm'} transition-shadow hover:shadow-md` }>
+              <h4 className={`font-semibold mb-4 ${textPrimary}`}>Backend & Mobile</h4>
+              <div className="grid grid-cols-2 gap-3">
+                <TechBadge icon={<FaNodeJs className="text-green-500" />} label="NodeJS" theme={theme} />
+                <TechBadge icon={<FaServer className="text-pink-400" />} label="Express.JS" theme={theme} />
+                <TechBadge icon={<FaDesktop className="text-indigo-400" />} label="ElectronJS" theme={theme} />
+                <TechBadge icon={<FaMobileAlt className="text-blue-400" />} label="React Native" theme={theme} />
+              </div>
+            </div>
+
+            <div className={`${cardBg} p-6 rounded-xl border ${theme === 'dark' ? 'border-gray-600 shadow-none' : 'border-gray-100 shadow-sm'} transition-shadow hover:shadow-md` }>
+              <h4 className={`font-semibold mb-4 ${textPrimary}`}>Database & Cloud</h4>
+              <div className="grid grid-cols-2 gap-3">
+                <TechBadge icon={<FaDatabase className="text-indigo-400" />} label="GraphQL" theme={theme} />
+                <TechBadge icon={<FaDatabase className="text-green-400" />} label="MongoDB" theme={theme} />
+                <TechBadge icon={<FaDatabase className="text-blue-400" />} label="MySQL" theme={theme} />
+                <TechBadge icon={<FaServer className="text-pink-400" />} label="Kafka" theme={theme} />
+              </div>
+            </div>
+
+            <div className={`${cardBg} p-6 rounded-xl border ${theme === 'dark' ? 'border-gray-600 shadow-none' : 'border-gray-100 shadow-sm'} transition-shadow hover:shadow-md` }>
+              <h4 className={`font-semibold mb-4 ${textPrimary}`}>DevOps & Tools</h4>
+              <div className="grid grid-cols-2 gap-3">
+                <TechBadge icon={<FaDocker className="text-sky-500" />} label="Docker" theme={theme} />
+                <TechBadge icon={<FaAws className="text-amber-400" />} label="AWS Lambda" theme={theme} />
+                <TechBadge icon={<FaGitAlt className="text-red-500" />} label="Git" theme={theme} />
+                <TechBadge icon={<FaTools className="text-indigo-400" />} label="VS Code" theme={theme} />
               </div>
             </div>
           </div>

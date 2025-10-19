@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useTheme } from '@/contexts/ThemeContext';
 
 const Services = () => {
@@ -62,12 +63,14 @@ const Services = () => {
       <div className="container mx-auto px-4 text-center mt-16">
         <h2 className="text-3xl font-bold mb-4">Let's Work Together</h2>
         <p className="text-lg mb-8">I'm always interested in new opportunities and exciting projects. Let's discuss how we can bring your ideas to life.</p>
-        <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-600 hover:to-blue-500 transform hover:scale-105 transition-all duration-300 flex items-center gap-2 mx-auto shadow-lg hover:shadow-xl">
-          <span>Get in touch</span>
-          <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </button>
+        <Link href="/contact">
+          <button className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:from-purple-600 hover:to-blue-500 transform hover:scale-105 transition-all duration-300 flex items-center gap-2 mx-auto shadow-lg hover:shadow-xl">
+            <span>Get in touch</span>
+            <svg className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </button>
+        </Link>
       </div>
     </section>
   );

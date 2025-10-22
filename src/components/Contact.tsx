@@ -88,9 +88,9 @@ const Contact = () => {
                     <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
                       <FaMapMarkerAlt className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden />
                     </div>
-                    <div className="text-center">
-                      <h4 className={`font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Based in Uttar Pradesh, India</h4>
-                      <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>Available for new opportunities</p>
+                    <div className="text-start">
+                      <h4 className={`font-semibold ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Location</h4>
+                      <p className={`text-sm ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>Uttar Pradesh, India</p>
                     </div>
                   </div>
                 </div>

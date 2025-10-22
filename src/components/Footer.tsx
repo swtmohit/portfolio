@@ -18,7 +18,7 @@ const Footer = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(59,130,246,0.3)_1px,transparent_0)] bg-[length:20px_20px]"></div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="w-4/5 mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
           {/* Developer Info */}
           <div className="space-y-4">

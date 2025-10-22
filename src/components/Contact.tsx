@@ -60,7 +60,7 @@ const Contact = () => {
               </motion.div>
               <div className="space-y-4">
                 <div className={`${cardBg} p-4 md:p-6 rounded-xl border ${theme === 'dark' ? 'border-gray-700' : 'border-gray-100'} shadow-sm` }>
-                  <a href="mailto:hmishra1210@gmail.com" className="flex items-center gap-4 min-w-0">
+                  <a href="mailto:swtmohit2002@gmail.com" className="flex items-center gap-4 min-w-0">
                     <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
                       <FaEnvelope className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden />
                     </div>
@@ -72,7 +72,7 @@ const Contact = () => {
                 </div>
 
                 <div className={`${cardBg} p-4 md:p-6 rounded-xl border ${theme === 'dark' ? 'border-gray-700' : 'border-gray-100'} shadow-sm` }>
-                  <a href="tel:+918439738074" className="flex items-center gap-4">
+                  <a href="tel:+918126488025" className="flex items-center gap-4">
                     <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
                       <FaPhoneAlt className="w-5 h-5 sm:w-6 sm:h-6" aria-hidden />
                     </div>

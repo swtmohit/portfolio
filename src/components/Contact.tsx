@@ -3,9 +3,18 @@
 import { motion } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
 import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaGithub, FaLinkedin, FaInstagram, FaPaperPlane } from 'react-icons/fa';
+import { useState } from 'react';
 
 const Contact = () => {
   const { theme } = useTheme();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const sectionBg = theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50';
   const formBg = theme === 'dark' ? 'bg-gray-700' : 'bg-white';
@@ -31,6 +40,42 @@ const Contact = () => {
       y: 0,
       transition: { duration: 0.6 },
     },
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -131,31 +176,83 @@ const Contact = () => {
               <div className={`${formBg} p-6 md:p-8 rounded-lg border ${theme === 'dark' ? 'border-gray-700' : 'border-gray-100'} shadow-md` }>
                 <h3 className={`text-xl font-semibold mb-6 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Send me a message</h3>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div>
-                    <label className={`block text-xs mb-2 ${labelText}`}>Name</label>
-                    <input className={`w-full px-4 py-3 border ${theme === 'dark' ? 'border-gray-600' : 'border-gray-200'} rounded-md ${inputBg} ${inputText}`} placeholder="Your name" />
+                {submitStatus === 'success' && (
+                  <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded-md">
+                    Message sent successfully! I'll get back to you soon.
                   </div>
-                  <div>
-                    <label className={`block text-xs mb-2 ${labelText}`}>Email</label>
-                    <input className={`w-full px-4 py-3 border ${theme === 'dark' ? 'border-gray-600' : 'border-gray-200'} rounded-md ${inputBg} ${inputText}`} placeholder="your.email@example.com" />
+                )}
+
+                {submitStatus === 'error' && (
+                  <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-md">
+                    Failed to send message. Please try again later.
                   </div>
-                </div>
+                )}
 
-                <div className="mb-4">
-                  <label className={`block text-xs mb-2 ${labelText}`}>Subject</label>
-                  <input className={`w-full px-4 py-3 border ${theme === 'dark' ? 'border-gray-600' : 'border-gray-200'} rounded-md ${inputBg} ${inputText}`} placeholder="What's this about?" />
-                </div>
+                <form onSubmit={handleSubmit}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                    <div>
+                      <label className={`block text-xs mb-2 ${labelText}`}>Name</label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        required
+                        className={`w-full px-4 py-3 border ${theme === 'dark' ? 'border-gray-600' : 'border-gray-200'} rounded-md ${inputBg} ${inputText}`}
+                        placeholder="Your name"
+                      />
+                    </div>
+                    <div>
+                      <label className={`block text-xs mb-2 ${labelText}`}>Email</label>
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required
+                        className={`w-full px-4 py-3 border ${theme === 'dark' ? 'border-gray-600' : 'border-gray-200'} rounded-md ${inputBg} ${inputText}`}
+                        placeholder="your.email@example.com"
+                      />
+                    </div>
+                  </div>
 
-                <div className="mb-6">
-                  <label className={`block text-xs mb-2 ${labelText}`}>Message</label>
-                  <textarea rows={6} className={`w-full px-4 py-3 border ${theme === 'dark' ? 'border-gray-600' : 'border-gray-200'} rounded-md ${inputBg} ${inputText}`} placeholder="Tell me about your project or just say hello!" />
-                </div>
+                  <div className="mb-4">
+                    <label className={`block text-xs mb-2 ${labelText}`}>Subject</label>
+                    <input
+                      type="text"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleInputChange}
+                      required
+                      className={`w-full px-4 py-3 border ${theme === 'dark' ? 'border-gray-600' : 'border-gray-200'} rounded-md ${inputBg} ${inputText}`}
+                      placeholder="What's this about?"
+                    />
+                  </div>
 
-                <button className={`w-full inline-flex items-center justify-center gap-3 ${theme === 'dark' ? 'bg-blue-700 hover:bg-blue-800' : 'bg-blue-600 hover:bg-blue-700'} text-white py-3 px-4 rounded-md transition`}>
-                  <FaPaperPlane className="w-4 h-4" />
-                  <span className="font-medium">Send Message</span>
-                </button>
+                  <div className="mb-6">
+                    <label className={`block text-xs mb-2 ${labelText}`}>Message</label>
+                    <textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      required
+                      rows={6}
+                      className={`w-full px-4 py-3 border ${theme === 'dark' ? 'border-gray-600' : 'border-gray-200'} rounded-md ${inputBg} ${inputText}`}
+                      placeholder="Tell me about your project or just say hello!"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className={`w-full inline-flex items-center justify-center gap-3 ${theme === 'dark' ? 'bg-blue-700 hover:bg-blue-800' : 'bg-blue-600 hover:bg-blue-700'} text-white py-3 px-4 rounded-md transition ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+                  >
+                    <FaPaperPlane className="w-4 h-4" />
+                    <span className="font-medium">
+                      {isSubmitting ? 'Sending...' : 'Send Message'}
+                    </span>
+                  </button>
+                </form>
               </div>
             </div>
           </div>

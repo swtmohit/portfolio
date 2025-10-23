@@ -141,7 +141,7 @@ const About = () => {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.6, delay: 0.2 }}
                 >
-                  My Journey
+                  My Journey.
                 </motion.h3>
                 <motion.p
                   className={`${textSecondary} leading-relaxed text-lg mb-8`}

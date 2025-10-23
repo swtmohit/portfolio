@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+
+// Force Node.js runtime so nodemailer (which relies on Node APIs) runs correctly on the server.
+export const runtime = 'nodejs';
 import nodemailer from 'nodemailer';
 
 export async function POST(request: NextRequest) {
@@ -19,6 +22,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email credentials not configured' }, { status: 500 });
     }
 
+
     // Create transporter (nodemailer uses createTransport)
     const transporter = nodemailer.createTransport({
       service: 'gmail',
@@ -27,6 +31,14 @@ export async function POST(request: NextRequest) {
         pass: process.env.EMAIL_PASS,
       },
     });
+
+    // Verify transporter configuration before sending (helps catch auth/network errors early)
+    try {
+      await transporter.verify();
+    } catch (verifyError) {
+      console.error('Nodemailer verify failed:', verifyError);
+      return NextResponse.json({ error: 'Email configuration verification failed' }, { status: 500 });
+    }
 
     // Email options
     const mailOptions = {
@@ -51,7 +63,14 @@ export async function POST(request: NextRequest) {
     };
 
     // Send email
-    await transporter.sendMail(mailOptions);
+    try {
+      const info = await transporter.sendMail(mailOptions);
+      console.log('Email sent:', info.messageId);
+    } catch (sendError) {
+      console.error('Error in transporter.sendMail:', sendError);
+      // Return a concise message to the client but log the full error server-side
+      return NextResponse.json({ error: 'Failed to send email (SMTP error)' }, { status: 500 });
+    }
 
     return NextResponse.json(
       { message: 'Email sent successfully' },
@@ -64,4 +83,9 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+export async function GET() {
+  // Lightweight health-check / connectivity test for the contact API
+  return NextResponse.json({ ok: true }, { status: 200 });
 }

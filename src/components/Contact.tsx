@@ -15,6 +15,7 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitMessage, setSubmitMessage] = useState<string | null>(null);
 
   const sectionBg = theme === 'dark' ? 'bg-gray-800' : 'bg-gray-50';
   const formBg = theme === 'dark' ? 'bg-gray-700' : 'bg-white';
@@ -64,15 +65,21 @@ const Contact = () => {
         body: JSON.stringify(formData),
       });
 
+      const data = await response.json().catch(() => ({}));
+
       if (response.ok) {
         setSubmitStatus('success');
+        setSubmitMessage(data?.message || 'Message sent successfully');
         setFormData({ name: '', email: '', subject: '', message: '' });
       } else {
         setSubmitStatus('error');
+        setSubmitMessage(data?.error || 'Failed to send message. Please try again later.');
+        console.error('API error response:', data);
       }
     } catch (error) {
       console.error('Error submitting form:', error);
       setSubmitStatus('error');
+      setSubmitMessage('Network error: failed to reach the server');
     } finally {
       setIsSubmitting(false);
     }

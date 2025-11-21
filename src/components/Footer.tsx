@@ -64,7 +64,7 @@ const Footer = () => {
               Have a project in mind? Let's discuss how we can bring your ideas to life.
             </p>
             <div className="flex justify-center md:justify-start space-x-6 pt-2">
-              <a href="#" className="text-2xl text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:scale-125 transition-all duration-300 hover:rotate-12 hover:shadow-lg">
+              <a href="https://github.com/swtmohit" className="text-2xl text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:scale-125 transition-all duration-300 hover:rotate-12 hover:shadow-lg">
                 <FaGithub />
               </a>
               <a href="#" className="text-2xl text-blue-600 hover:text-blue-700 hover:scale-125 transition-all duration-300 hover:rotate-12 hover:shadow-lg">

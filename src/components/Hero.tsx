@@ -3,29 +3,291 @@
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useState, useEffect } from 'react';
+import { FaReact, FaNodeJs, FaCss3Alt, FaHtml5, FaBootstrap, FaGithub } from 'react-icons/fa';
+import { SiMongodb, SiMysql, SiDocker, SiGithubcopilot, SiTailwindcss } from 'react-icons/si';
+import { VscVscode } from 'react-icons/vsc';
 
 const Hero = () => {
   const { theme } = useTheme();
+  const [text, setText] = useState('');
+  const fullText = "Full-Stack Developer from India";
 
+  useEffect(() => {
+    let index = 0;
+    const interval = setInterval(() => {
+      setText(fullText.slice(0, index));
+      index++;
+      if (index > fullText.length) {
+        clearInterval(interval);
+      }
+    }, 100);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Developer-themed background for dark mode
   const sectionClass = theme === 'dark'
-    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white py-12 md:py-20'
-    : 'bg-white text-gray-900 py-12 md:py-20';
+    ? 'relative bg-slate-950 text-white py-12 md:py-20 overflow-hidden'
+    : 'bg-white text-gray-900 py-12 md:py-20 relative overflow-hidden';
+
+  // Grid pattern for background
+  const GridBackground = () => (
+    <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div className="absolute left-0 right-0 top-0 -z-10 m-auto h-[310px] w-[310px] rounded-full bg-purple-500 opacity-20 blur-[100px]"></div>
+    </div>
+  );
 
   const viewWorkButtonClass = theme === 'dark'
-    ? 'bg-white text-blue-600 px-3 py-2 md:px-8 md:py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300'
+    ? 'bg-cyan-500/10 border border-cyan-500/50 text-cyan-400 px-3 py-2 md:px-8 md:py-3 rounded-lg font-semibold hover:bg-cyan-500/20 hover:shadow-[0_0_15px_rgba(34,211,238,0.4)] transition-all duration-300 backdrop-blur-sm'
     : 'bg-blue-600 text-white px-3 py-2 md:px-8 md:py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300';
 
   const downloadResumeButtonClass = theme === 'dark'
-    ? 'bg-purple-600 text-white px-3 py-2 md:px-8 md:py-3 rounded-lg font-semibold hover:bg-purple-700 transition duration-300'
+    ? 'bg-purple-500/10 border border-purple-500/50 text-purple-400 px-3 py-2 md:px-8 md:py-3 rounded-lg font-semibold hover:bg-purple-500/20 hover:shadow-[0_0_15px_rgba(168,85,247,0.4)] transition-all duration-300 backdrop-blur-sm'
     : 'bg-green-600 text-white px-3 py-2 md:px-8 md:py-3 rounded-lg font-semibold hover:bg-green-700 transition duration-300';
 
-  const imageBorder = theme === 'dark' ? 'border-4 border-white' : 'border-4 border-gray-200';
+  const imageBorder = theme === 'dark' ? 'border-4 border-slate-800' : 'border-4 border-gray-200';
 
-  const nameClass = theme === 'dark' ? 'text-cyan-400' : 'text-blue-300';
+  const nameClass = theme === 'dark' ? 'text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500' : 'text-blue-600';
+
+  // Floating code elements
+  const FloatingElement = ({ children, delay, x, y }: { children: React.ReactNode, delay: number, x: number, y: number }) => (
+    <motion.div
+      className="absolute text-slate-700/20 font-mono text-4xl font-bold select-none z-0 hidden md:block"
+      initial={{ opacity: 0, x, y }}
+      animate={{
+        opacity: [0.1, 0.3, 0.1],
+        y: [y, y - 20, y],
+      }}
+      transition={{
+        duration: 4,
+        delay,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+
+  // Wandering Icon Component
+  const WanderingIcon = ({
+    children,
+    className,
+    color,
+    moveX = [0, 20, -20, 0],
+    moveY = [0, -20, 20, 0],
+    duration = 5,
+    delay = 0
+  }: {
+    children: React.ReactNode,
+    className: string,
+    color: string,
+    moveX?: number[],
+    moveY?: number[],
+    duration?: number,
+    delay?: number
+  }) => (
+    <motion.div
+      className={`absolute ${className} w-10 h-10 md:w-14 md:h-14 ${theme === 'dark'
+          ? 'bg-slate-800/40 border-slate-700/50'
+          : 'bg-white/80 border-slate-200/60 shadow-sm'
+        } backdrop-blur-sm rounded-full flex items-center justify-center border shadow-lg z-0`}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{
+        opacity: 0.5,
+        scale: 1,
+        x: moveX,
+        y: moveY,
+        rotate: [0, 10, -10, 0]
+      }}
+      transition={{
+        opacity: { duration: 0.5 },
+        scale: { duration: 0.5 },
+        x: { duration: duration, repeat: Infinity, ease: "easeInOut", delay: delay },
+        y: { duration: duration, repeat: Infinity, ease: "easeInOut", delay: delay },
+        rotate: { duration: duration * 1.5, repeat: Infinity, ease: "easeInOut", delay: delay }
+      }}
+    >
+      <div className={`${color} text-xl md:text-3xl`}>{children}</div>
+    </motion.div>
+  );
 
   return (
     <section className={sectionClass}>
-      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center">
+      {theme === 'dark' && <GridBackground />}
+
+      {/* Full Width Wandering Icons Container */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Left Side Cluster */}
+        <WanderingIcon
+          className="top-[10%] left-[5%]"
+          color={theme === 'dark' ? "text-yellow-400" : "text-yellow-600"}
+          moveX={[0, 120, -80, 150, 0]}
+          moveY={[0, 80, -120, 50, 0]}
+          duration={18}
+          delay={0}
+        >
+          <span className="font-bold text-xs md:text-sm">JS</span>
+        </WanderingIcon>
+
+        <WanderingIcon
+          className="top-[25%] left-[15%]"
+          color={theme === 'dark' ? "text-blue-500" : "text-blue-600"}
+          moveX={[0, -100, 140, -50, 0]}
+          moveY={[0, 150, -80, 120, 0]}
+          duration={22}
+          delay={2}
+        >
+          <FaReact />
+        </WanderingIcon>
+
+        <WanderingIcon
+          className="top-[45%] left-[8%]"
+          color={theme === 'dark' ? "text-orange-500" : "text-orange-600"}
+          moveX={[0, 180, -60, 100, 0]}
+          moveY={[0, -100, 150, -40, 0]}
+          duration={25}
+          delay={1}
+        >
+          <FaHtml5 />
+        </WanderingIcon>
+
+        <WanderingIcon
+          className="bottom-[20%] left-[12%]"
+          color={theme === 'dark' ? "text-blue-600" : "text-blue-700"}
+          moveX={[0, -150, 80, -120, 0]}
+          moveY={[0, 100, -180, 60, 0]}
+          duration={20}
+          delay={3}
+        >
+          <FaCss3Alt />
+        </WanderingIcon>
+
+        <WanderingIcon
+          className="bottom-[10%] left-[5%]"
+          color={theme === 'dark' ? "text-blue-600" : "text-blue-700"}
+          moveX={[0, 100, -140, 60, 0]}
+          moveY={[0, -120, 80, -100, 0]}
+          duration={19}
+          delay={0.5}
+        >
+          <span className="font-bold text-xs md:text-sm">TS</span>
+        </WanderingIcon>
+
+        {/* Center/Top/Bottom Scattered */}
+        <WanderingIcon
+          className="top-[5%] left-[35%]"
+          color={theme === 'dark' ? "text-green-600" : "text-green-700"}
+          moveX={[0, 200, -150, 100, 0]}
+          moveY={[0, 50, -80, 120, 0]}
+          duration={28}
+          delay={4}
+        >
+          <FaNodeJs />
+        </WanderingIcon>
+
+        <WanderingIcon
+          className="bottom-[5%] left-[40%]"
+          color={theme === 'dark' ? "text-purple-600" : "text-purple-700"}
+          moveX={[0, -180, 120, -60, 0]}
+          moveY={[0, -100, 150, -80, 0]}
+          duration={30}
+          delay={2.5}
+        >
+          <FaBootstrap />
+        </WanderingIcon>
+
+        <WanderingIcon
+          className="top-[8%] right-[40%]"
+          color={theme === 'dark' ? "text-white" : "text-slate-900"}
+          moveX={[0, 150, -120, 80, 0]}
+          moveY={[0, 100, -150, 60, 0]}
+          duration={26}
+          delay={1.5}
+        >
+          <FaGithub />
+        </WanderingIcon>
+
+        <WanderingIcon
+          className="bottom-[8%] right-[35%]"
+          color={theme === 'dark' ? "text-blue-400" : "text-blue-600"}
+          moveX={[0, -120, 180, -100, 0]}
+          moveY={[0, -150, 100, -80, 0]}
+          duration={24}
+          delay={3.5}
+        >
+          <SiDocker />
+        </WanderingIcon>
+
+        {/* Far Right Strip */}
+        <WanderingIcon
+          className="top-[15%] right-[5%]"
+          color={theme === 'dark' ? "text-cyan-400" : "text-cyan-600"}
+          moveX={[0, -100, 80, -150, 0]}
+          moveY={[0, 180, -60, 120, 0]}
+          duration={27}
+          delay={0.8}
+        >
+          <SiTailwindcss />
+        </WanderingIcon>
+
+        <WanderingIcon
+          className="top-[40%] right-[2%]"
+          color={theme === 'dark' ? "text-green-500" : "text-green-600"}
+          moveX={[0, -150, 100, -80, 0]}
+          moveY={[0, 120, -180, 50, 0]}
+          duration={29}
+          delay={2.2}
+        >
+          <SiMongodb />
+        </WanderingIcon>
+
+        <WanderingIcon
+          className="bottom-[30%] right-[5%]"
+          color={theme === 'dark' ? "text-blue-300" : "text-blue-600"}
+          moveX={[0, -80, 150, -120, 0]}
+          moveY={[0, -100, 80, -150, 0]}
+          duration={25}
+          delay={1.2}
+        >
+          <SiMysql />
+        </WanderingIcon>
+
+        <WanderingIcon
+          className="bottom-[10%] right-[2%]"
+          color={theme === 'dark' ? "text-blue-500" : "text-blue-600"}
+          moveX={[0, -120, 60, -180, 0]}
+          moveY={[0, -80, 150, -100, 0]}
+          duration={23}
+          delay={4.5}
+        >
+          <VscVscode />
+        </WanderingIcon>
+
+        <WanderingIcon
+          className="top-[50%] left-[45%]"
+          color={theme === 'dark' ? "text-white" : "text-slate-900"}
+          moveX={[0, 150, -150, 100, 0]}
+          moveY={[0, -150, 150, -100, 0]}
+          duration={32}
+          delay={3.8}
+        >
+          <SiGithubcopilot />
+        </WanderingIcon>
+      </div>
+
+      {/* Floating Code Elements for Developer Theme */}
+      {theme === 'dark' && (
+        <>
+          <FloatingElement delay={0} x={50} y={100}>&lt;/&gt;</FloatingElement>
+          <FloatingElement delay={1} x={800} y={50}>{`{ }`}</FloatingElement>
+          <FloatingElement delay={2} x={100} y={400}>const</FloatingElement>
+          <FloatingElement delay={1.5} x={900} y={500}>npm</FloatingElement>
+        </>
+      )}
+
+      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center relative z-10">
         <motion.div
           className="text-left max-w-2xl mb-8 md:mb-0 ml-0 md:ml-16"
           initial={{ opacity: 0, x: -50 }}
@@ -39,10 +301,12 @@ const Hero = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <span className="text-3xl md:text-5xl">Hi, I'm <span className={nameClass}>Mohit Singh</span></span><br />
-            <span className="text-xl md:text-3xl mt-4">Full-Stack Developer from India</span>
+            <span className="text-xl md:text-3xl mt-4 font-mono text-slate-400 h-8 inline-block">
+              {text}<span className="animate-pulse">|</span>
+            </span>
           </motion.h1>
           <motion.p
-            className="text-base md:text-lg mb-8"
+            className="text-base md:text-lg mb-8 text-slate-400"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -50,9 +314,9 @@ const Hero = () => {
             Aspiring Full Stack Developer passionate about creating responsive, user-friendly, and interactive web applications.<br />
             Proficient in HTML, CSS, JavaScript, React.js, and Node.js, with a solid understanding of modern web development tools, frameworks, and best practices.
           </motion.p>
-          <div className="grid grid-cols-2 gap-2 justify-items-center md:flex md:flex-row md:justify-start">
+          <div className="grid grid-cols-2 gap-4 justify-items-center md:flex md:flex-row md:justify-start">
             <motion.button
-              className={`${viewWorkButtonClass} flex items-center gap-2`}
+              className={`${viewWorkButtonClass} flex items-center gap-2 w-full md:w-auto justify-center`}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.6 }}
@@ -82,7 +346,7 @@ const Hero = () => {
               View My Work
             </motion.button>
             <motion.button
-              className={`${downloadResumeButtonClass} flex items-center gap-2`}
+              className={`${downloadResumeButtonClass} flex items-center gap-2 w-full md:w-auto justify-center`}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.8 }}
@@ -117,12 +381,12 @@ const Hero = () => {
               href="https://github.com/yourusername"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-14 h-14 bg-gray-800 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-shadow duration-300"
-              whileHover={{ scale: 1.1, rotate: 5 }}
+              className="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center text-white shadow-lg border border-slate-700 hover:border-cyan-500 hover:shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all duration-300"
+              whileHover={{ scale: 1.1, y: -5 }}
               whileTap={{ scale: 0.95 }}
             >
               <svg
-                className="w-7 h-7"
+                className="w-6 h-6"
                 fill="currentColor"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
@@ -134,12 +398,12 @@ const Hero = () => {
               href="https://linkedin.com/in/yourprofile"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-shadow duration-300"
-              whileHover={{ scale: 1.1, rotate: -5 }}
+              className="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center text-white shadow-lg border border-slate-700 hover:border-blue-500 hover:shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-all duration-300"
+              whileHover={{ scale: 1.1, y: -5 }}
               whileTap={{ scale: 0.95 }}
             >
               <svg
-                className="w-7 h-7"
+                className="w-6 h-6"
                 fill="currentColor"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
@@ -151,12 +415,12 @@ const Hero = () => {
               href="https://instagram.com/yourusername"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-14 h-14 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 rounded-full flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-shadow duration-300"
-              whileHover={{ scale: 1.1, rotate: 10 }}
+              className="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center text-white shadow-lg border border-slate-700 hover:border-pink-500 hover:shadow-[0_0_10px_rgba(236,72,153,0.3)] transition-all duration-300"
+              whileHover={{ scale: 1.1, y: -5 }}
               whileTap={{ scale: 0.95 }}
             >
               <svg
-                className="w-7 h-7"
+                className="w-6 h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -170,62 +434,49 @@ const Hero = () => {
           </div>
         </motion.div>
         <motion.div
-          className="flex justify-center md:flex-1"
+          className="flex justify-center md:flex-1 mt-12 md:mt-0"
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <div className="relative group w-48 h-48 md:w-72 md:h-72">
+          <div className="relative group w-64 h-64 md:w-80 md:h-80">
+            {/* Tech ring animation */}
+            <motion.div
+              className="absolute inset-0 rounded-full border border-dashed border-cyan-500/30"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+            ></motion.div>
+            <motion.div
+              className="absolute -inset-4 rounded-full border border-dotted border-purple-500/30"
+              animate={{ rotate: -360 }}
+              transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
+            ></motion.div>
+
             {/* Outer rotating border */}
             <motion.div
-              className="absolute inset-0 rounded-full border-4 border-transparent bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 p-1 pointer-events-none z-10"
+              className="absolute inset-0 rounded-full border-2 border-transparent bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 p-0.5 pointer-events-none z-10"
               animate={{ rotate: 360 }}
               transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
             >
-              <div className="w-full h-full rounded-full bg-gradient-to-r from-blue-500 to-purple-600"></div>
+              <div className="w-full h-full rounded-full bg-slate-950"></div>
             </motion.div>
-            {/* Inner glow */}
-            <motion.div
-              className="absolute inset-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 opacity-50 pointer-events-none z-20"
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            ></motion.div>
+
             {/* Image */}
             <motion.div
-              className="absolute inset-2 rounded-full overflow-hidden z-50"
+              className="absolute inset-1 rounded-full overflow-hidden z-50"
               style={{ willChange: 'transform' }}
-              whileHover={{ scale: 1.05, rotate: 0 }}
+              whileHover={{ scale: 1.02 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
               <Image
                 src="/1.jpg"
-                alt="Your Picture"
-                width={288}
-                height={288}
-                className={`rounded-full w-full h-full z-50 shadow-2xl object-cover ${imageBorder} hover:shadow-3xl pointer-events-auto`}
+                alt="Mohit Singh"
+                width={320}
+                height={320}
+                className={`rounded-full w-full h-full z-50 object-cover ${imageBorder}`}
               />
             </motion.div>
-            {/* Floating particles */}
-            <motion.div
-              className="absolute -top-4 -left-4 md:-top-6 md:-left-6 w-4 h-4 bg-cyan-400 rounded-full"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            ></motion.div>
-            <motion.div
-              className="absolute -bottom-4 -right-4 md:-bottom-6 md:-right-6 w-3 h-3 bg-pink-400 rounded-full"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-            ></motion.div>
-            <motion.div
-              className="absolute top-1/2 -right-6 md:-right-8 w-2 h-2 bg-yellow-400 rounded-full"
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 1, repeat: Infinity, ease: 'easeInOut' }}
-            ></motion.div>
-            <motion.div
-              className="absolute top-1/4 -left-6 md:-left-8 w-3 h-3 bg-purple-400 rounded-full"
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
-            ></motion.div>
+
           </div>
         </motion.div>
       </div>

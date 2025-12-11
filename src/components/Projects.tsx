@@ -39,7 +39,7 @@ const Projects = () => {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.3 }}
+          viewport={{ once: true, amount: 0.1 }}
           variants={containerVariants}
           className="space-y-8"
         >
@@ -94,7 +94,11 @@ const Projects = () => {
                     <div className="flex items-start justify-between mb-4">
                       <h3 className={`text-2xl font-bold ${titleText} leading-tight`}>{project.title}</h3>
                       {project.type && (
-                        <div className={`text-sm ${descText} flex items-center gap-2 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full`}>
+                        <div className={`text-xs text-center font-medium px-5 py-1 rounded-full ${
+                          theme === 'dark'
+                            ? 'bg-gray-700 text-gray-200'
+                            : 'bg-slate-900 text-white'
+                        }`}>
                           {project.type}
                         </div>
                       )}
@@ -121,7 +125,6 @@ const Projects = () => {
                         </span>
                       )}
                     </div>
-
                     <div className="flex items-center gap-4">
                       <div className={`text-sm ${descText} flex items-center gap-2`}>
                         <FaCalendarAlt className="text-blue-500" />

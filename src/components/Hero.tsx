@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useState, useEffect } from 'react';
@@ -78,7 +79,8 @@ const Hero = () => {
     moveX = [0, 20, -20, 0],
     moveY = [0, -20, 20, 0],
     duration = 5,
-    delay = 0
+    delay = 0,
+    onClick
   }: {
     children: React.ReactNode,
     className: string,
@@ -86,13 +88,14 @@ const Hero = () => {
     moveX?: number[],
     moveY?: number[],
     duration?: number,
-    delay?: number
+    delay?: number,
+    onClick?: () => void
   }) => (
     <motion.div
       className={`absolute ${className} w-10 h-10 md:w-14 md:h-14 ${theme === 'dark'
           ? 'bg-slate-800/40 border-slate-700/50'
           : 'bg-white/80 border-slate-200/60 shadow-sm'
-        } backdrop-blur-sm rounded-full flex items-center justify-center border shadow-lg z-0`}
+        } backdrop-blur-sm rounded-full flex items-center justify-center border shadow-lg z-0 ${onClick ? 'cursor-pointer hover:opacity-75' : ''}`}
       initial={{ opacity: 0, scale: 0 }}
       animate={{
         opacity: 0.5,
@@ -108,6 +111,7 @@ const Hero = () => {
         y: { duration: duration, repeat: Infinity, ease: "easeInOut", delay: delay },
         rotate: { duration: duration * 1.5, repeat: Infinity, ease: "easeInOut", delay: delay }
       }}
+      onClick={onClick}
     >
       <div className={`${color} text-xl md:text-3xl`}>{children}</div>
     </motion.div>
@@ -205,6 +209,7 @@ const Hero = () => {
           moveY={[0, 100, -150, 60, 0]}
           duration={26}
           delay={1.5}
+          onClick={() => window.open('https://github.com/swtmohit', '_blank')}
         >
           <FaGithub />
         </WanderingIcon>
@@ -287,7 +292,7 @@ const Hero = () => {
         </>
       )}
 
-      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center relative z-10">
+      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center relative z-10 pointer-events-auto">
         <motion.div
           className="text-left max-w-2xl mb-8 md:mb-0 ml-0 md:ml-16"
           initial={{ opacity: 0, x: -50 }}
@@ -315,36 +320,38 @@ const Hero = () => {
             Proficient in HTML, CSS, JavaScript, React.js, and Node.js, with a solid understanding of modern web development tools, frameworks, and best practices.
           </motion.p>
           <div className="grid grid-cols-2 gap-4 justify-items-center md:flex md:flex-row md:justify-start">
-            <motion.button
-              className={`${viewWorkButtonClass} flex items-center gap-2 w-full md:w-auto justify-center`}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
+            <Link href="/projects">
+              <motion.button
+                className={`${viewWorkButtonClass} flex items-center gap-2 w-full md:w-auto justify-center`}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                />
-              </svg>
-              View My Work
-            </motion.button>
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                  />
+                </svg>
+                View My Work
+              </motion.button>
+            </Link>
             <motion.button
               className={`${downloadResumeButtonClass} flex items-center gap-2 w-full md:w-auto justify-center`}
               initial={{ opacity: 0, scale: 0.8 }}
@@ -376,18 +383,21 @@ const Hero = () => {
               Download Resume
             </motion.button>
           </div>
-          <div className="flex justify-center md:justify-start gap-6 mt-8">
+          <div className="flex justify-center md:justify-start gap-6 mt-8 pointer-events-auto">
             <motion.a
-              href="https://github.com/yourusername"
+              href="https://github.com/swtmohit"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center text-white shadow-lg border border-slate-700 hover:border-cyan-500 hover:shadow-[0_0_10px_rgba(34,211,238,0.3)] transition-all duration-300"
+              className={`w-12 h-12 rounded-lg flex items-center justify-center shadow-lg border transition-all duration-300 pointer-events-auto ${theme === 'dark'
+                ? 'bg-slate-800 text-white border-slate-700 hover:border-cyan-500 hover:shadow-[0_0_10px_rgba(34,211,238,0.3)]'
+                : 'bg-white text-slate-900 border-gray-200 hover:border-gray-400 hover:shadow-[0_0_10px_rgba(0,0,0,0.1)]'
+                }`}
               whileHover={{ scale: 1.1, y: -5 }}
               whileTap={{ scale: 0.95 }}
             >
               <svg
                 className="w-6 h-6"
-                fill="currentColor"
+                fill={theme === 'dark' ? "currentColor" : "#333"}
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -395,16 +405,19 @@ const Hero = () => {
               </svg>
             </motion.a>
             <motion.a
-              href="https://linkedin.com/in/yourprofile"
+              href="https://www.linkedin.com/in/mohit-singh-917609349"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center text-white shadow-lg border border-slate-700 hover:border-blue-500 hover:shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-all duration-300"
+              className={`w-12 h-12 rounded-lg flex items-center justify-center shadow-lg border transition-all duration-300 ${theme === 'dark'
+                ? 'bg-slate-800 text-white border-slate-700 hover:border-blue-500 hover:shadow-[0_0_10px_rgba(59,130,246,0.3)]'
+                : 'bg-white text-slate-900 border-gray-200 hover:border-gray-400 hover:shadow-[0_0_10px_rgba(0,0,0,0.1)]'
+                }`}
               whileHover={{ scale: 1.1, y: -5 }}
               whileTap={{ scale: 0.95 }}
             >
               <svg
                 className="w-6 h-6"
-                fill="currentColor"
+                fill={theme === 'dark' ? "currentColor" : "#0A66C2"}
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -412,17 +425,20 @@ const Hero = () => {
               </svg>
             </motion.a>
             <motion.a
-              href="https://instagram.com/yourusername"
+              href="https://www.instagram.com/swtmohit31"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-12 h-12 bg-slate-800 rounded-lg flex items-center justify-center text-white shadow-lg border border-slate-700 hover:border-pink-500 hover:shadow-[0_0_10px_rgba(236,72,153,0.3)] transition-all duration-300"
+              className={`w-12 h-12 rounded-lg flex items-center justify-center shadow-lg border transition-all duration-300 ${theme === 'dark'
+                ? 'bg-slate-800 text-white border-slate-700 hover:border-pink-500 hover:shadow-[0_0_10px_rgba(236,72,153,0.3)]'
+                : 'bg-white text-slate-900 border-gray-200 hover:border-gray-400 hover:shadow-[0_0_10px_rgba(0,0,0,0.1)]'
+                }`}
               whileHover={{ scale: 1.1, y: -5 }}
               whileTap={{ scale: 0.95 }}
             >
               <svg
                 className="w-6 h-6"
                 fill="none"
-                stroke="currentColor"
+                stroke={theme === 'dark' ? "currentColor" : "#E4405F"}
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >

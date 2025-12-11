@@ -64,13 +64,13 @@ const Footer = () => {
               Have a project in mind? Let's discuss how we can bring your ideas to life.
             </p>
             <div className="flex justify-center md:justify-start space-x-6 pt-2">
-              <a href="https://github.com/swtmohit" className="text-2xl text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:scale-125 transition-all duration-300 hover:rotate-12 hover:shadow-lg">
+              <a href="https://github.com/swtmohit" target="_blank" rel="noopener noreferrer" className="text-2xl text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 hover:scale-125 transition-all duration-300 hover:rotate-12 hover:shadow-lg">
                 <FaGithub />
               </a>
-              <a href="#" className="text-2xl text-blue-600 hover:text-blue-700 hover:scale-125 transition-all duration-300 hover:rotate-12 hover:shadow-lg">
+              <a href="https://www.linkedin.com/in/mohit-singh-917609349" target="_blank" rel="noopener noreferrer" className="text-2xl text-blue-600 hover:text-blue-700 hover:scale-125 transition-all duration-300 hover:rotate-12 hover:shadow-lg">
                 <FaLinkedin />
               </a>
-              <a href="#" className="text-2xl text-pink-500 hover:text-pink-600 hover:scale-125 transition-all duration-300 hover:rotate-12 hover:shadow-lg">
+              <a href="https://www.instagram.com/swtmohit31" target="_blank" rel="noopener noreferrer" className="text-2xl text-pink-500 hover:text-pink-600 hover:scale-125 transition-all duration-300 hover:rotate-12 hover:shadow-lg">
                 <FaInstagram />
               </a>
             </div>
@@ -81,7 +81,7 @@ const Footer = () => {
         <div className={`mt-12 pt-8 border-t ${theme === 'dark' ? 'border-gray-700' : 'border-gray-200'} text-center`}>
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className={`text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-              &copy; 2025 Mohit Singh. All rights reserved.
+              &copy; 2023 Mohit Singh. All rights reserved.
             </p>
             <p className={`text-sm flex items-center justify-center space-x-2 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
               <span>Made with</span>

@@ -152,7 +152,9 @@ const Contact = () => {
                 <h5 className={`font-semibold mb-3 text-center sm:text-left ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Follow me on</h5>
                 <div className="flex items-center gap-3 justify-center sm:justify-start">
                   <motion.a
-                    href="#"
+                    href="https://github.com/swtmohit"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="p-2 sm:p-3 rounded-md bg-gray-900 text-white hover:bg-gray-800 transition-colors"
                     whileHover={{ scale: 1.1, boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }}
                     whileTap={{ scale: 0.95 }}
@@ -160,7 +162,9 @@ const Contact = () => {
                     <FaGithub />
                   </motion.a>
                   <motion.a
-                    href="#"
+                    href="https://www.linkedin.com/in/mohit-singh-917609349"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="p-2 sm:p-3 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors"
                     whileHover={{ scale: 1.1, boxShadow: '0 10px 25px rgba(59,130,246,0.5)' }}
                     whileTap={{ scale: 0.95 }}
@@ -168,7 +172,9 @@ const Contact = () => {
                     <FaLinkedin />
                   </motion.a>
                   <motion.a
-                    href="#"
+                    href="https://www.instagram.com/swtmohit31"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="p-2 sm:p-3 rounded-md bg-gradient-to-r from-pink-500 to-purple-500 text-white hover:from-pink-600 hover:to-purple-600 transition-all"
                     whileHover={{ scale: 1.1, boxShadow: '0 10px 25px rgba(236,72,153,0.5)' }}
                     whileTap={{ scale: 0.95 }}

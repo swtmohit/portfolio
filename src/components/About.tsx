@@ -165,7 +165,7 @@ const About = () => {
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <p className={`${textPrimary} text-center text-lg font-semibold`}>🧩 6+<br />Projects Completed</p>
+                  <p className={`${textPrimary} text-center text-lg font-semibold`}>🧩 3+<br />Projects Completed</p>
                 </motion.div>
                 <motion.div
                   className={`${cardBg} p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600`}
@@ -177,7 +177,7 @@ const About = () => {
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <p className={`${textPrimary} text-center text-lg font-semibold`}>⏳ 3+<br />Years Experience</p>
+                  <p className={`${textPrimary} text-center text-lg font-semibold`}>⏳ 1+<br />Years Experience</p>
                 </motion.div>
               </div>
             </motion.div>
@@ -228,10 +228,8 @@ const About = () => {
             <div className={`${cardBg} p-6 rounded-xl border ${theme === 'dark' ? 'border-gray-600 shadow-none' : 'border-gray-100 shadow-sm'} transition-shadow hover:shadow-md`}>
               <h4 className={`font-semibold mb-4 ${textPrimary}`}>Database & Cloud</h4>
               <div className="grid grid-cols-2 gap-3">
-                <TechBadge icon={<FaDatabase className="text-indigo-400" />} label="GraphQL" theme={theme} />
                 <TechBadge icon={<FaDatabase className="text-green-400" />} label="MongoDB" theme={theme} />
                 <TechBadge icon={<FaDatabase className="text-blue-400" />} label="MySQL" theme={theme} />
-                <TechBadge icon={<FaServer className="text-pink-400" />} label="Kafka" theme={theme} />
               </div>
             </div>
 

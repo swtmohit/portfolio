@@ -265,11 +265,11 @@ const About = () => {
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
             {/* Timeline item 1 */}
             <div className="md:col-span-3 flex justify-start md:justify-end">
-              <div className="inline-block bg-blue-900/60 text-white rounded-full px-6 py-2">Jun 2023 - Jan 2024</div>
+              <div className="inline-block bg-blue-900/60 text-white rounded-full px-6 py-2">July 2024 - December 2024</div>
             </div>
             <div className="md:col-span-9">
               <div className={`${cardBg} rounded-lg p-6 border ${theme === 'dark' ? 'border-gray-700' : 'border-gray-100'} shadow-md`}>
-                <h4 className={`text-xl font-bold ${textPrimary}`}>Junior Full Stack Developer</h4>
+                <h4 className={`text-xl font-bold ${textPrimary}`}>Junior Full Stack Developer (Internship)</h4>
                 <p className={`text-sm ${theme === 'dark' ? 'text-cyan-300' : 'text-blue-600'} mb-3`}>Technosters Technologies OPC Pvt. Ltd.</p>
                 <p className={`${textSecondary}`}>Contributed to the design and development of a fully functional e-commerce platform along with a dynamic admin panel using React.js, Material-UI, and Tailwind CSS. Independently delivered a responsive and intuitive user experience, optimizing frontend performance by 45%. Developed modular and reusable backend APIs, ensuring seamless integration between client and server for enhanced scalability and maintainability. Conducted thorough API testing using Postman and maintained backend services to guarantee reliability and efficiency.</p>
               </div>
@@ -277,7 +277,7 @@ const About = () => {
 
             {/* Timeline item 2 */}
             <div className="md:col-span-3 flex justify-start md:justify-end">
-              <div className="inline-block bg-blue-900/60 text-white rounded-full px-6 py-2">Jan 2024 - Present</div>
+              <div className="inline-block bg-blue-900/60 text-white rounded-full px-6 py-2">Jan 2025 - Present</div>
             </div>
             <div className="md:col-span-9">
               <div className={`${cardBg} rounded-lg p-6 border ${theme === 'dark' ? 'border-gray-700' : 'border-gray-100'} shadow-md`}>

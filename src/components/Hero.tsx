@@ -2,17 +2,70 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+  useTransform,
+} from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FaReact, FaNodeJs, FaCss3Alt, FaHtml5, FaBootstrap, FaGithub } from 'react-icons/fa';
 import { SiMongodb, SiMysql, SiDocker, SiGithubcopilot, SiTailwindcss } from 'react-icons/si';
 import { VscVscode } from 'react-icons/vsc';
 
 const Hero = () => {
   const { theme } = useTheme();
+  const reduceMotion = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
+  const mouseX = useMotionValue(0.5);
+  const mouseY = useMotionValue(0.5);
+  const smoothX = useSpring(mouseX, { stiffness: 45, damping: 22, mass: 0.4 });
+  const smoothY = useSpring(mouseY, { stiffness: 45, damping: 22, mass: 0.4 });
+  const parallaxX = useTransform(smoothX, [0, 1], [18, -18]);
+  const parallaxY = useTransform(smoothY, [0, 1], [14, -14]);
+  const parallaxXInvert = useTransform(parallaxX, (v) => -v * 0.85);
+  const parallaxYInvert = useTransform(parallaxY, (v) => -v * 0.85);
+
   const [text, setText] = useState('');
   const fullText = "Full-Stack Developer from India";
+
+  const easeOut = [0.22, 1, 0.36, 1] as const;
+  const contentVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: reduceMotion
+        ? { duration: 0 }
+        : { staggerChildren: 0.11, delayChildren: 0.08 },
+    },
+  };
+  const itemVariants = {
+    hidden: reduceMotion
+      ? { opacity: 0 }
+      : { opacity: 0, y: 22, filter: 'blur(6px)' },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)',
+      transition: reduceMotion
+        ? { duration: 0 }
+        : { duration: 0.55, ease: easeOut },
+    },
+  };
+
+  const handleHeroPointer = (e: React.PointerEvent<HTMLElement>) => {
+    if (reduceMotion || !sectionRef.current) return;
+    const r = sectionRef.current.getBoundingClientRect();
+    mouseX.set((e.clientX - r.left) / r.width);
+    mouseY.set((e.clientY - r.top) / r.height);
+  };
+
+  const resetParallax = () => {
+    mouseX.set(0.5);
+    mouseY.set(0.5);
+  };
 
   useEffect(() => {
     let index = 0;
@@ -54,18 +107,26 @@ const Hero = () => {
   // Floating code elements
   const FloatingElement = ({ children, delay, x, y }: { children: React.ReactNode, delay: number, x: number, y: number }) => (
     <motion.div
-      className="absolute text-slate-700/20 font-mono text-4xl font-bold select-none z-0 hidden md:block"
+      className="absolute z-0 hidden select-none font-mono text-4xl font-bold text-slate-700/20 md:block"
       initial={{ opacity: 0, x, y }}
-      animate={{
-        opacity: [0.1, 0.3, 0.1],
-        y: [y, y - 20, y],
-      }}
-      transition={{
-        duration: 4,
-        delay,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }}
+      animate={
+        reduceMotion
+          ? { opacity: 0.12, x, y }
+          : {
+              opacity: [0.1, 0.28, 0.1],
+              y: [y, y - 20, y],
+            }
+      }
+      transition={
+        reduceMotion
+          ? { duration: 0 }
+          : {
+              duration: 4,
+              delay,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }
+      }
     >
       {children}
     </motion.div>
@@ -97,29 +158,72 @@ const Hero = () => {
           : 'bg-white/80 border-slate-200/60 shadow-sm'
         } backdrop-blur-sm rounded-full flex items-center justify-center border shadow-lg z-0 ${onClick ? 'cursor-pointer hover:opacity-75' : ''}`}
       initial={{ opacity: 0, scale: 0 }}
-      animate={{
-        opacity: 0.5,
-        scale: 1,
-        x: moveX,
-        y: moveY,
-        rotate: [0, 10, -10, 0]
-      }}
-      transition={{
-        opacity: { duration: 0.5 },
-        scale: { duration: 0.5 },
-        x: { duration: duration, repeat: Infinity, ease: "easeInOut", delay: delay },
-        y: { duration: duration, repeat: Infinity, ease: "easeInOut", delay: delay },
-        rotate: { duration: duration * 1.5, repeat: Infinity, ease: "easeInOut", delay: delay }
-      }}
+      animate={
+        reduceMotion
+          ? { opacity: 0.45, scale: 1, x: 0, y: 0, rotate: 0 }
+          : {
+              opacity: 0.5,
+              scale: 1,
+              x: moveX,
+              y: moveY,
+              rotate: [0, 10, -10, 0],
+            }
+      }
+      transition={
+        reduceMotion
+          ? { duration: 0.35 }
+          : {
+              opacity: { duration: 0.5 },
+              scale: { duration: 0.5 },
+              x: { duration, repeat: Infinity, ease: 'easeInOut', delay },
+              y: { duration, repeat: Infinity, ease: 'easeInOut', delay },
+              rotate: {
+                duration: duration * 1.5,
+                repeat: Infinity,
+                ease: 'easeInOut',
+                delay,
+              },
+            }
+      }
       onClick={onClick}
     >
       <div className={`${color} text-xl md:text-3xl`}>{children}</div>
     </motion.div>
   );
 
+  const ringInnerClass =
+    theme === 'dark' ? 'bg-slate-950' : 'bg-white';
+
   return (
-    <section className={sectionClass}>
-      {theme === 'dark' && <GridBackground />}
+    <section
+      ref={sectionRef}
+      className={sectionClass}
+      onPointerMove={handleHeroPointer}
+      onPointerLeave={resetParallax}
+    >
+      {theme === 'dark' ? (
+        <GridBackground />
+      ) : (
+        <div className="pointer-events-none absolute inset-0 z-0 opacity-40">
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808010_1px,transparent_1px),linear-gradient(to_bottom,#80808010_1px,transparent_1px)] bg-[size:24px_24px]" />
+          <div className="absolute left-1/2 top-0 -z-10 m-auto h-[280px] w-[280px] -translate-x-1/2 rounded-full bg-blue-400/15 blur-[90px]" />
+        </div>
+      )}
+
+      {!reduceMotion && (
+        <motion.div
+          className="pointer-events-none absolute left-[12%] top-[22%] z-0 h-72 w-72 rounded-full bg-cyan-500/15 blur-3xl dark:bg-cyan-500/10"
+          style={{ x: parallaxX, y: parallaxY }}
+          aria-hidden
+        />
+      )}
+      {!reduceMotion && (
+        <motion.div
+          className="pointer-events-none absolute bottom-[18%] right-[10%] z-0 h-64 w-64 rounded-full bg-violet-500/15 blur-3xl dark:bg-violet-500/10"
+          style={{ x: parallaxXInvert, y: parallaxYInvert }}
+          aria-hidden
+        />
+      )}
 
       {/* Full Width Wandering Icons Container */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -292,42 +396,67 @@ const Hero = () => {
         </>
       )}
 
-      <div className="container mx-auto px-4 flex flex-col md:flex-row items-center relative z-10 pointer-events-auto">
+      <div className="container mx-auto flex flex-col items-center px-4 relative z-10 pointer-events-auto md:flex-row">
         <motion.div
-          className="text-left max-w-2xl mb-8 md:mb-0 ml-0 md:ml-16"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="mb-8 ml-0 max-w-2xl text-left md:mb-0 md:ml-16"
+          variants={contentVariants}
+          initial="hidden"
+          animate="visible"
         >
-          <motion.h1
-            className="font-bold mb-8"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+          <motion.span
+            variants={itemVariants}
+            className={`mb-5 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold uppercase tracking-widest md:text-sm ${
+              theme === 'dark'
+                ? 'border-cyan-500/35 bg-cyan-500/10 text-cyan-300'
+                : 'border-blue-200 bg-blue-50 text-blue-700'
+            }`}
           >
-            <span className="text-3xl md:text-5xl">Hi, I'm <span className={nameClass}>Mohit Singh</span></span><br />
-            <span className="text-xl md:text-3xl mt-4 font-mono text-slate-400 h-8 inline-block">
-              {text}<span className="animate-pulse">|</span>
+            <span className="relative flex h-2 w-2">
+              {!reduceMotion && (
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              )}
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+            </span>
+            Open to opportunities
+          </motion.span>
+          <motion.h1 variants={itemVariants} className="mb-8 font-bold">
+            <span className="text-3xl md:text-5xl">
+              Hi, I&apos;m <span className={nameClass}>Mohit Singh</span>
+            </span>
+            <br />
+            <span className="mt-4 inline-block h-8 font-mono text-xl text-slate-500 dark:text-slate-400 md:text-3xl">
+              {text}
+              <motion.span
+                animate={reduceMotion ? undefined : { opacity: [1, 0.2, 1] }}
+                transition={
+                  reduceMotion
+                    ? undefined
+                    : { duration: 0.9, repeat: Infinity, ease: 'easeInOut' }
+                }
+                className="inline-block"
+              >
+                |
+              </motion.span>
             </span>
           </motion.h1>
           <motion.p
-            className="text-base md:text-lg mb-8 text-slate-400"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            variants={itemVariants}
+            className="mb-8 text-base leading-relaxed text-slate-600 dark:text-slate-400 md:text-lg"
           >
-            Aspiring Full Stack Developer passionate about creating responsive, user-friendly, and interactive web applications.<br />
+            Aspiring Full Stack Developer passionate about creating responsive, user-friendly, and interactive web applications.
+            <br />
             Proficient in HTML, CSS, JavaScript, React.js, and Node.js, with a solid understanding of modern web development tools, frameworks, and best practices.
           </motion.p>
-          <div className="grid grid-cols-2 gap-4 justify-items-center md:flex md:flex-row md:justify-start">
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-2 justify-items-center gap-4 md:flex md:flex-row md:justify-start"
+          >
             <Link href="/projects">
               <motion.button
-                className={`${viewWorkButtonClass} flex items-center gap-2 w-full md:w-auto justify-center`}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                className={`${viewWorkButtonClass} flex w-full items-center justify-center gap-2 md:w-auto`}
+                whileHover={reduceMotion ? undefined : { scale: 1.04 }}
+                whileTap={reduceMotion ? undefined : { scale: 0.97 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 22 }}
               >
                 <svg
                   className="w-5 h-5"
@@ -353,12 +482,10 @@ const Hero = () => {
               </motion.button>
             </Link>
             <motion.button
-              className={`${downloadResumeButtonClass} flex items-center gap-2 w-full md:w-auto justify-center`}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className={`${downloadResumeButtonClass} flex w-full items-center justify-center gap-2 md:w-auto`}
+              whileHover={reduceMotion ? undefined : { scale: 1.04 }}
+              whileTap={reduceMotion ? undefined : { scale: 0.97 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 22 }}
               onClick={() => {
                 const link = document.createElement('a');
                 link.href = '/Mohit_Singh.pdf';
@@ -382,8 +509,11 @@ const Hero = () => {
               </svg>
               Download Resume
             </motion.button>
-          </div>
-          <div className="flex justify-center md:justify-start gap-6 mt-8 pointer-events-auto">
+          </motion.div>
+          <motion.div
+            variants={itemVariants}
+            className="mt-8 flex justify-center gap-6 pointer-events-auto md:justify-start"
+          >
             <motion.a
               href="https://github.com/swtmohit"
               target="_blank"
@@ -392,8 +522,8 @@ const Hero = () => {
                 ? 'bg-slate-800 text-white border-slate-700 hover:border-cyan-500 hover:shadow-[0_0_10px_rgba(34,211,238,0.3)]'
                 : 'bg-white text-slate-900 border-gray-200 hover:border-gray-400 hover:shadow-[0_0_10px_rgba(0,0,0,0.1)]'
                 }`}
-              whileHover={{ scale: 1.1, y: -5 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={reduceMotion ? undefined : { scale: 1.08, y: -4 }}
+              whileTap={reduceMotion ? undefined : { scale: 0.96 }}
             >
               <svg
                 className="w-6 h-6"
@@ -412,8 +542,8 @@ const Hero = () => {
                 ? 'bg-slate-800 text-white border-slate-700 hover:border-blue-500 hover:shadow-[0_0_10px_rgba(59,130,246,0.3)]'
                 : 'bg-white text-slate-900 border-gray-200 hover:border-gray-400 hover:shadow-[0_0_10px_rgba(0,0,0,0.1)]'
                 }`}
-              whileHover={{ scale: 1.1, y: -5 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={reduceMotion ? undefined : { scale: 1.08, y: -4 }}
+              whileTap={reduceMotion ? undefined : { scale: 0.96 }}
             >
               <svg
                 className="w-6 h-6"
@@ -432,8 +562,8 @@ const Hero = () => {
                 ? 'bg-slate-800 text-white border-slate-700 hover:border-pink-500 hover:shadow-[0_0_10px_rgba(236,72,153,0.3)]'
                 : 'bg-white text-slate-900 border-gray-200 hover:border-gray-400 hover:shadow-[0_0_10px_rgba(0,0,0,0.1)]'
                 }`}
-              whileHover={{ scale: 1.1, y: -5 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={reduceMotion ? undefined : { scale: 1.08, y: -4 }}
+              whileTap={reduceMotion ? undefined : { scale: 0.96 }}
             >
               <svg
                 className="w-6 h-6"
@@ -447,42 +577,59 @@ const Hero = () => {
                 <circle cx="18.5" cy="5.5" r="1.5" />
               </svg>
             </motion.a>
-          </div>
+          </motion.div>
         </motion.div>
         <motion.div
-          className="flex justify-center md:flex-1 mt-12 md:mt-0"
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
+          className="mt-12 flex justify-center md:mt-0 md:flex-1"
+          initial={
+            reduceMotion ? { opacity: 0 } : { opacity: 0, x: 40, scale: 0.96 }
+          }
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={
+            reduceMotion
+              ? { duration: 0 }
+              : { duration: 0.65, delay: 0.2, ease: easeOut }
+          }
         >
           <div className="relative group w-64 h-64 md:w-80 md:h-80">
             {/* Tech ring animation */}
             <motion.div
-              className="absolute inset-0 rounded-full border border-dashed border-cyan-500/30"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-            ></motion.div>
+              className="absolute inset-0 rounded-full border border-dashed border-cyan-500/30 dark:border-cyan-500/40"
+              animate={reduceMotion ? undefined : { rotate: 360 }}
+              transition={
+                reduceMotion
+                  ? undefined
+                  : { duration: 22, repeat: Infinity, ease: 'linear' }
+              }
+            />
             <motion.div
-              className="absolute -inset-4 rounded-full border border-dotted border-purple-500/30"
-              animate={{ rotate: -360 }}
-              transition={{ duration: 25, repeat: Infinity, ease: 'linear' }}
-            ></motion.div>
+              className="absolute -inset-4 rounded-full border border-dotted border-purple-500/30 dark:border-purple-500/35"
+              animate={reduceMotion ? undefined : { rotate: -360 }}
+              transition={
+                reduceMotion
+                  ? undefined
+                  : { duration: 28, repeat: Infinity, ease: 'linear' }
+              }
+            />
 
-            {/* Outer rotating border */}
             <motion.div
-              className="absolute inset-0 rounded-full border-2 border-transparent bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 p-0.5 pointer-events-none z-10"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+              className="pointer-events-none absolute inset-0 z-10 rounded-full border-2 border-transparent bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 p-0.5 dark:from-cyan-400 dark:via-purple-500 dark:to-pink-500"
+              animate={reduceMotion ? undefined : { rotate: 360 }}
+              transition={
+                reduceMotion
+                  ? undefined
+                  : { duration: 10, repeat: Infinity, ease: 'linear' }
+              }
             >
-              <div className="w-full h-full rounded-full bg-slate-950"></div>
+              <div className={`h-full w-full rounded-full ${ringInnerClass}`} />
             </motion.div>
 
             {/* Image */}
             <motion.div
-              className="absolute inset-1 rounded-full overflow-hidden z-50"
+              className="absolute inset-1 z-50 overflow-hidden rounded-full"
               style={{ willChange: 'transform' }}
-              whileHover={{ scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              whileHover={reduceMotion ? undefined : { scale: 1.03 }}
+              transition={{ type: 'spring', stiffness: 380, damping: 18 }}
             >
               <Image
                 src="/1.jpg"

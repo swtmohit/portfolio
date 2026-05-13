@@ -65,7 +65,7 @@ export const projects = [
   {
     id: 'webcrafter',
     title: 'WebCrafter – No-Code Website Builder & Hosting Platform',
-    type: 'Client Project',
+    type: 'Client Project (Only Frontend)',
     description:
       'A no-code website builder platform where users can create, customize, and host their websites using pre-built templates, blocks, and integrated domain tools.',
     longDescription:
@@ -85,6 +85,51 @@ export const projects = [
     repo: '', // private repo (no public access)
     demo: '', // production platform (access restricted)
     image: '/project-4.jpg'
+  },
+  {
+    id: 'Dukaan-Dekho',
+    title: 'Dukaan Dekho Your Local Shopping Companion',
+    type: 'Client Project (Only Frontend)',
+    description:
+      'Developed a responsive e-commerce web app using Next.js with REST API integration, vendor–customer chat, hybrid online-to-offline purchasing, and Google Maps-based vendor discovery.',
+    longDescription:
+      'Developed a scalable and responsive e-commerce web application using Next.js with a modern full-stack architecture, enabling seamless product browsing, secure purchasing, and real-time customer engagement. Integrated REST APIs for dynamic product management, order handling, authentication, and vendor operations. Implemented a vendor–customer chat system to support direct communication, improving customer interaction and query resolution. Built a hybrid online-to-offline purchasing workflow where users could explore products online, discover nearby vendors through Google Maps-based location services, and complete purchases either digitally or through physical vendor stores. Integrated geolocation and map-based vendor discovery features to help customers find nearby sellers efficiently. Focused on responsive UI/UX, performance optimization, reusable component architecture, and smooth cross-device compatibility to deliver a fast and user-friendly shopping experience.',
+    year: '2025',
+    duration: '3 months',
+    teamSize: 'Solo Project (Only Me)',
+    technologies: [
+      'Next.js',
+      'TypeScript',
+      'Tailwind CSS'
+    ],
+    repo: '', // private repo (no public access)
+    demo: '', // production platform (access restricted)
+    image: '/dukaan.png'
+  },
+  {
+    id: 'local-search-business-listing-platform',
+    title: 'Local Search & Business Listing Platform',
+    type: 'Client Project (Full Stack)',
+    description:
+      'Developed a Local Search & Business Listing Platform with business and agent panels, along with a customer mobile app for managing listings, onboarding businesses, and discovering nearby services.',
+    longDescription:
+      'Developed a scalable Local Search & Business Listing Platform using React.js, React Native, Node.js, Express.js, and MySQL, featuring a Business Panel, Agent Panel, and dedicated Customer & Business Mobile Apps.The platform enabled businesses to manage listings and profiles, while agents could onboard and verify businesses efficiently. Built responsive web interfaces with React.js and cross-platform mobile apps with React Native for Android and iOS.Implemented REST APIs using Node.js and Express.js for seamless communication between panels and mobile applications. The customer app allowed users to discover nearby businesses and services through location-based search and categorized listings.',
+    year: '2025',
+    duration: '3 months',
+    teamSize: '2 Members Team',
+    technologies: [
+      'Next.js',
+      'Javascript',
+      'React.js',
+      'React Native',
+      'Node.js',
+      'Express.js',
+      'MySQL',
+      'Matrial Ui'
+    ],
+    repo: '', // private repo (no public access)
+    demo: '', // production platform (access restricted)
+    image: '/just.png'
   }
 ];
 

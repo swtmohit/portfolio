@@ -130,6 +130,27 @@ export const projects = [
     repo: '', // private repo (no public access)
     demo: '', // production platform (access restricted)
     image: '/just.png'
+  },
+  {
+    id: 'bring-fresh',
+    title: 'Bring Fresh - Online Fruits & Vegetables',
+    type: 'Client Project (Only Frontend)',
+    description:
+      'Bringfresh online grocery e-commerce platform focused on delivering fresh fruits, vegetables, dry fruits, and leafy greens to customers’ doorsteps.',
+    longDescription:
+      'Developed Bringfresh, an online grocery e-commerce platform focused on delivering fresh fruits, vegetables, dry fruits, and leafy greens directly to customers’ doorsteps. The platform was designed to provide a seamless and user-friendly shopping experience with features such as product browsing, category-based filtering, secure authentication, cart and order management, real-time inventory updates, and online payment integration. Built with a scalable full-stack architecture, the system supports efficient order processing, responsive design for multiple devices, and optimized performance to ensure fast and reliable grocery delivery services for customers.',
+    year: '2025',
+    duration: '2 months',
+    teamSize: '2 Members Team',
+    technologies: [
+      'bootstrap',
+      'Javascript',
+      'ejs',
+      'Node.js',
+    ],
+    repo: '', // private repo (no public access)
+    demo: '', // production platform (access restricted)
+    image: '/bring.png'
   }
 ];
 

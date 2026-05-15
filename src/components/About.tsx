@@ -242,7 +242,7 @@ const About = () => {
                     whileTap={reduceMotion ? undefined : { scale: 0.97 }}
                   >
                     <p className={`text-center text-lg font-semibold ${textPrimary}`}>
-                      🧩 3+
+                      🧩 6+
                       <br />
                       Projects Completed
                     </p>
@@ -259,7 +259,7 @@ const About = () => {
                     whileTap={reduceMotion ? undefined : { scale: 0.97 }}
                   >
                     <p className={`text-center text-lg font-semibold ${textPrimary}`}>
-                      ⏳ 1+
+                      ⏳ 1.5+
                       <br />
                       Years Experience
                     </p>
